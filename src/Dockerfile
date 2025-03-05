@@ -1,11 +1,7 @@
-FROM ubuntu:latest
-ARG NODE_MAJOR=20
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh && \
-    bash nodesource_setup.sh && \
-    apt-get install -y nodejs
+FROM node:20.9.0-alpine3.18
 WORKDIR /app
-COPY . .
+COPY package*.json .
 RUN npm install
+COPY . .
+EXPOSE 8080
 ENTRYPOINT [ "node", "server.js" ]
